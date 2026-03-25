@@ -71,6 +71,7 @@ body {
     font-family: "Geologica", sans-serif;
     font-weight: 600;
     line-height: 1;
+    transition: all 0.3s ease;
 }
 
 #service .intro .text {
@@ -149,6 +150,34 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom center;
+}
+
+/* Enemy Styling */
+.enemy {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 90;
+    user-select: none;
+    will-change: transform, opacity;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('sprites/enemy.png');
+}
+
+@keyframes flicker {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.dying {
+    animation: flicker 0.1s infinite;
+    filter: grayscale(1) brightness(2) !important;
 }
 
 .loading-container {
