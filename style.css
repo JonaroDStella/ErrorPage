@@ -39,7 +39,7 @@ body {
 #service .intro .bg {
     position: absolute;
     top: 0;
-    left: -170px;
+    left: -10vw;
     width: 122vw;
     height: 100%;
     border-radius: 100px 0 0 100px;
