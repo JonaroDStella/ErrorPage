@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css", rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -25,11 +25,9 @@
                 <div class="bg">
                     <div class="image"></div>
                 </div>
-                
                 <div class="page-ttl-box">
                     <h2>Error 503</h2>
                 </div>
-
                 <div class="text">
                     The stage is being reset. Our technical staff and talents are currently working to bring the show back online.
                 </div>
@@ -37,6 +35,14 @@
         </div>
 
         <div class="controls-wrapper">
+            <!-- Character Animation Box -->
+            <div id="character" class="character-container">
+                <div id="error" class="error-layer"></div>
+                <div id="char-leg" class="char-layer"></div>
+                <div id="char-body" class="char-layer"></div>
+            </div>
+            <div id="hint" class="click-hint">Click the character</div>
+
             <div class="loading-container">
                 <div id="progress" class="loading-bar"></div>
             </div>
@@ -47,17 +53,113 @@
     </div>
 
     <script>
+        // Assets Mapping
+        const bodyFrames = ['body0.png', 'body1.png'];
+        const legFrames = ['leg0.png', 'leg1.png', 'leg2.png'];
+
+        const charBody = document.getElementById('char-body');
+        const charLeg = document.getElementById('char-leg');
+        const character = document.getElementById('character');
+        const error = document.getElementById('error');
         const bar = document.getElementById('progress');
         const statusText = document.getElementById('status');
-        let width = 0;
+        const hint = document.getElementById('hint');
+
+        let currentFrame = 0;
+        let isFollowing = false;
         
+        // --- Animation Engine ---
+        let startTime = Date.now();
+
+        function updateAnimation() {
+            const now = Date.now();
+            const elapsed = (now - startTime) / 1000; // seconds
+            
+            // Animation Speed: adjust the multiplier inside sin() for frequency
+            // 2 * Math.PI means one full cycle per second
+            const sinVal = Math.sin(elapsed * 30);
+            
+            // Scaling logic: Oscillate between 1.0 and 1.2
+            // formula: base + (amplitude * (sin + 1) / 2) -> map -1,1 to 0,1 then to 1, 1.2
+            const scaleY = 1.0 + (0.05 * sinVal);
+            
+            // Body selection: body0 when scale is higher (sinVal > 0), body1 when scale is lower (sinVal < 0)
+            const bodyImg = sinVal > 0 ? bodyFrames[0] : bodyFrames[1];
+            const legImg = legFrames[0];
+
+            charBody.style.backgroundImage = `url('sprites/${bodyImg}')`;
+            charLeg.style.backgroundImage = `url('sprites/${legImg}')`;
+            
+            // Apply transformation
+            // If following, we use translate to move it; if not, we use basic transform
+            const baseTransform = isFollowing ? `translate(-50%, -100%)` : `scale(1)`;
+            character.style.transform = `${baseTransform} scaleY(${scaleY})`;
+            
+            // --- Mouse Follow Logic ---
+            let mouseX = window.innerWidth / 2;
+            let mouseY = window.innerHeight / 2;
+            let charX = window.innerWidth / 2;
+            let charY = window.innerHeight / 2;
+            const speed = 50; 
+
+            // Follow Logic
+            if (isFollowing) {
+                const dx = mouseX - charX;
+                const dy = mouseY - charY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance > speed) {
+                    // Move exactly speed pixels toward the target
+                    charX += (dx / distance) * speed;
+                    charY += (dy / distance) * speed;
+                } else {
+                    // Snap to mouse if very close
+                    charX = mouseX;
+                    charY = mouseY;
+                }
+
+                character.style.left = charX + 'px';
+                character.style.top = charY + 'px';
+            }else{
+                const bodyImg = sinVal > 0 ? bodyFrames[0] : bodyFrames[1];
+                error.style.backgroundImage = sinVal > 0 ? `url('sprites/error0.png')` : `url('sprites/error1.png')`;
+            }
+
+            requestAnimationFrame(updateAnimation);
+        }
+
+
+        character.addEventListener('click', () => {
+            if (!isFollowing) {
+                const rect = character.getBoundingClientRect();
+                charX = rect.left + rect.width / 2;
+                charY = rect.top + rect.height / 2;
+                
+                isFollowing = true;
+                character.classList.add('following');
+                error.hidden = true;
+                hint.style.display = 'none';
+                
+                // Speed up animation when following to signify "running/moving"
+                clearInterval(animInterval);
+                animInterval = setInterval(updateCharacterAnimation, 150);
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // --- Progress Bar Logic ---
         const messages = [
             "Gathering Assets...",
             "Tuning Instruments...",
             "Polishing Pixels...",
-            "Rebooting the Engine...",
-            "Setting up the Microphone..."
+            "Rebooting...",
+            "Mic Check..."
         ];
+        let width = 0;
 
         function animateLoading() {
             setInterval(() => {
@@ -72,7 +174,12 @@
             }, 100);
         }
 
-        window.onload = animateLoading;
+        // --- Initialization ---
+        let animInterval;
+        window.onload = () => {
+            animateLoading();
+            requestAnimationFrame(updateAnimation);
+        };
     </script>
 </body>
 </html>
