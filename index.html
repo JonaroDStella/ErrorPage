@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>503 - Taking a Break | CCMC Corporation</title>
+    <!-- Importing Geologica for Headings and Noto Sans for Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --hi-blue: #2fb9ff;
+            --hi-dark: #1a1a1a;
+            --hi-error: #ff4b4b;
+            --hi-service-blue: #2F3380;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #ffffff;
+            background-image: url('https://ccmc-corp.com/wp-content/themes/ccmc/assets/img/bg-sp.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--hi-dark);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        #service .intro {
+            margin-bottom: 62px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #service .intro {
+                margin-bottom: 9.0625vw;
+            }
+        }
+
+        #service .intro .inner {
+            position: relative;
+            padding: 42px 0 90px;
+            width: 90%;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #service .intro .inner {
+                margin: 0 -3.125vw;
+                padding: 7.8125vw 6.25vw 9.0625vw 9.375vw;
+                width: 95%;
+            }
+        }
+
+        #service .intro .bg {
+            position: absolute;
+            top: 0;
+            left: -170px;
+            width: 122vw;
+            height: 100%;
+            border-radius: 100px 0 0 100px;
+            overflow: hidden;
+            background-image: linear-gradient(160deg, rgb(221, 242, 253), rgba(221, 242, 253, 0.4));
+            background-size: cover;
+        }
+
+        #service .intro .bg .image{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("https://ccmc-corp.com/wp-content/themes/ccmc/assets/img/service/bg_intro.png") no-repeat top center;
+            background-size: cover;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #service .intro .bg {
+                left: 0;
+            }
+        }
+
+        #service .intro .page-ttl-box {
+            position: relative;
+            margin-bottom: 50px;
+            color: var(--hi-service-blue);
+            text-align: left;
+            margin-left: 60px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #service .intro .page-ttl-box {
+                margin: 0 3.125vw 7.8125vw;
+            }
+        }
+
+        #service .intro .page-ttl-box h2 {
+            font-size: 60px;
+            font-family: "Geologica", sans-serif;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #service .intro .page-ttl-box h2 {
+                font-size: 9.375vw;
+            }
+        }
+
+        #service .intro .text {
+            position: relative;
+            font-size: 20px;
+            line-height: 1.8;
+            font-weight: 500;
+            color: var(--hi-service-blue);
+            text-align: left;
+            max-width: 600px;
+            margin-left: 60px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #service .intro .text {
+                font-size: 3.125vw;
+                margin-left: 3.125vw;
+            }
+        }
+
+        /* --- UI Elements --- */
+        .logo-container {
+            margin-bottom: 3rem;
+            width: 200px;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .error-label {
+            display: inline-block;
+            background: var(--hi-error);
+            color: white;
+            padding: 6px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-radius: 50px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(255, 75, 75, 0.3);
+        }
+
+        .controls-wrapper {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .loading-container {
+            width: 320px;
+            height: 20px;
+            border: 2px solid var(--hi-dark);
+            background: #fff;
+            margin: 24px auto 8px auto;
+            position: relative;
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background-color: var(--hi-blue);
+            width: 0%;
+            transition: width 0.3s ease-out;
+            border-radius: 1px;
+        }
+
+        .btn-retry {
+            margin-top: 32px;
+            display: inline-block;
+            padding: 12px 48px;
+            background-color: #ffffff;
+            color: var(--hi-dark);
+            font-family: 'Geologica', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            border: 2px solid var(--hi-dark);
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-retry:hover {
+            background-color: var(--hi-dark);
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="service">
+        <div class="logo-container">
+            <img src="https://ccmc-corp.com/wp-content/themes/ccmc/assets/img/global/logo.svg" alt="holoindie logo">
+        </div>
+
+        <div class="error-label">Service Interrupted</div>
+
+        <div class="intro">
+            <div class="inner">
+                <div class="bg">
+                    <div class="image"></div>
+                </div>
+                
+                <div class="page-ttl-box">
+                    <h2>Error 503</h2>
+                </div>
+
+                <div class="text">
+                    The stage is being reset. Our technical staff and talents are currently working to bring the show back online.
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-wrapper">
+            <div class="loading-container">
+                <div id="progress" class="loading-bar"></div>
+            </div>
+            <div id="status" class="status-text text-sm font-bold uppercase tracking-widest text-[#2F3380]">Reconnecting...</div>
+
+            <button class="btn-retry" onclick="location.reload()">Reload Stage</button>
+        </div>
+    </div>
+
+    <script>
+        const bar = document.getElementById('progress');
+        const statusText = document.getElementById('status');
+        let width = 0;
+        
+        const messages = [
+            "Gathering Assets...",
+            "Tuning Instruments...",
+            "Polishing Pixels...",
+            "Rebooting the Engine...",
+            "Setting up the Microphone..."
+        ];
+
+        function animateLoading() {
+            setInterval(() => {
+                if (width >= 100) {
+                    width = 0;
+                    statusText.innerText = messages[Math.floor(Math.random() * messages.length)];
+                } else {
+                    width += Math.random() * 4;
+                    if (width > 100) width = 100;
+                    bar.style.width = width + '%';
+                }
+            }, 100);
+        }
+
+        window.onload = animateLoading;
+    </script>
+</body>
+</html>
