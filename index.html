@@ -161,7 +161,7 @@
                     e.el.style.top = e.y + 'px';
 
                     const edx = charX - e.x;
-                    const edy = (charY - 50) - (e.y + 25); // Target center of image
+                    const edy = (charY - 100) - e.y; // Target center of image
                     const dist = Math.sqrt(edx * edx + edy * edy);
 
                     if (dist < 100) {
