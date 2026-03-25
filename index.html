@@ -65,6 +65,9 @@
         const bar = document.getElementById('progress');
         const statusText = document.getElementById('status');
         const hint = document.getElementById('hint');
+
+        const killSound = new Audio('sounds/bonk.mp3');
+        killSound.volume = 0.3;
         
         let currentFrame = 0;
         let isFollowing = false;
@@ -163,6 +166,8 @@
 
                     if (dist < 100) {
                         killEnemy(e, i);
+                        killSound.currentTime = 0;
+                        killSound.play();
                     }
                 }
             }else{
@@ -263,8 +268,8 @@
         const messages = [
             "Gathering Assets...",
             "Tuning Instruments...",
-            "Polishing Pixels...",
-            "Rebooting...",
+            "Dressing up...",
+            "Cheering up Holo Staff...",
             "Mic Check..."
         ];
         let width = 0;
